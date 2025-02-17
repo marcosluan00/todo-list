@@ -1,0 +1,57 @@
+<div class="card shadow-sm mt-5">
+    <div class="card-body">
+      <form (ngSubmit)="aoEnviar()" #formularioTarefa="ngForm">
+        <div class="mb-3">
+          <input 
+            type="text" 
+            class="form-control form-control-lg" 
+            placeholder="O que precisa ser feito?"
+            [(ngModel)]="titulo"
+            name="titulo"
+            #tituloInput="ngModel"
+            required>
+        </div>
+  
+        <div class="mb-3">
+          <textarea 
+            class="form-control" 
+            placeholder="Descrição (opcional)"
+            [(ngModel)]="descricao"
+            name="descricao"
+            rows="2"></textarea>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label">Prioridade</label>
+          <div class="d-flex gap-2">
+            @for(p of prioridades;track p){
+                <div class="flex-grow-1">
+                    <input 
+                      type="radio" 
+                      class="btn-check" 
+                      [id]="p.valor" 
+                      name="prioridade" 
+                      [(ngModel)]="prioridade"
+                      [value]="p.valor">
+                    <label 
+                      class="btn w-100" 
+                      [class]="'btn-outline-' + p.cor"
+                      [for]="p.valor">
+                      {{ p.rotulo }}
+                    </label>
+                </div>
+            }
+            
+          </div>
+        </div>
+  
+        <button 
+          type="submit" 
+          class="btn btn-primary w-100"
+          [disabled]="!titulo.trim()">
+          Adicionar Tarefa
+        </button>
+      </form>
+    </div>
+  </div>
+  
