@@ -1,59 +1,81 @@
 # ToDoList
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.6.
+Este projeto é uma aplicação de lista de tarefas desenvolvida com [Angular](https://angular.io/) e [Bootstrap](https://getbootstrap.com/). A aplicação permite que os usuários adicionem, editem e excluam tarefas, além de marcar tarefas como concluídas. A interface é responsiva e utiliza animações para melhorar a experiência do usuário.
 
-## Development server
+## Tecnologias Utilizadas
 
-To start a local development server, run:
+- **Angular**: Framework para construção de aplicações web.
+- **Bootstrap**: Biblioteca de CSS para estilização e layout responsivo.
 
-```bash
-ng serve
-```
+## Futuras Alterações
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Versão 1: Funcionalidades Básicas (Localhost)
 
-## Code scaffolding
+- Adicionar, editar e excluir tarefas.
+- Marcar tarefas como concluídas.
+- Interface responsiva utilizando Bootstrap.
+- Armazenamento de tarefas no `localStorage`.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Versão 2: Autenticação
 
-```bash
-ng generate component component-name
-```
+- Implementação de autenticação de usuários.
+- Proteção de rotas com `AuthGuard`.
+- Login e registro de usuários.
+- Armazenamento seguro de credenciais no `localStorage`.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Versão 3: Conexão com Firebase
 
-```bash
-ng generate --help
-```
+- Integração com Firebase para armazenamento de dados.
+- Autenticação de usuários utilizando Firebase Authentication.
+- Sincronização de tarefas em tempo real.
+- Implementação de funcionalidades avançadas como notificações push.
 
-## Building
+## Tutorial Rápido para Rodar o Projeto
 
-To build the project run:
+### Pré-requisitos
 
-```bash
-ng build
-```
+- Node.js e npm instalados. Você pode baixá-los em [nodejs.org](https://nodejs.org/).
+- Angular CLI instalado globalmente. Para instalar, execute:
+  ```bash
+  npm install -g @angular/cli
+  ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Passos para Rodar o Projeto
 
-## Running unit tests
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/todo-list.git
+   cd todo-list
+   ```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
 
-```bash
-ng test
-```
+3. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   ng serve
+   ```
 
-## Running end-to-end tests
+4. **Abra o navegador e navegue para:**
+   ```
+   http://localhost:4200/
+   ```
 
-For end-to-end (e2e) testing, run:
+A aplicação será recarregada automaticamente sempre que você modificar qualquer um dos arquivos de origem.
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Contribuindo
 
-## Additional Resources
+Se você deseja contribuir para este projeto, por favor, siga as diretrizes de contribuição.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. Faça um fork do repositório.
+2. Crie uma nova branch (`git checkout -b feature/nova-funcionalidade`).
+3. Faça suas alterações e commit (`git commit -m 'Adiciona nova funcionalidade'`).
+4. Envie para a branch (`git push origin feature/nova-funcionalidade`).
+5. Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
