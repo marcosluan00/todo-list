@@ -2,6 +2,7 @@ import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Tarefa, Prioridade } from '../models/todo.interface';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class TodoService {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
+    private authService: AuthService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.carregarTarefas();
@@ -46,19 +48,31 @@ export class TodoService {
   }
 
   obterTarefas(): Observable<Tarefa[]> {
-    return this.tarefas.asObservable();
+    const usuarioAtual = this.authService.obterUsuarioAtual();
+    if (!usuarioAtual) return new BehaviorSubject<Tarefa[]>([]).asObservable();
+    
+    const tarefasDoUsuario = this.tarefas.value.filter(
+      tarefa => tarefa.usuarioId === usuarioAtual
+    );
+    return new BehaviorSubject<Tarefa[]>(tarefasDoUsuario).asObservable();
   }
 
   obterTarefasPorPrioridade(prioridade: Prioridade): Tarefa[] {
+    const usuarioAtual = this.authService.obterUsuarioAtual();
+    if (!usuarioAtual) return [];
+    
     return this.tarefas.value.filter(
-      tarefa => tarefa.prioridade === prioridade
+      tarefa => tarefa.usuarioId === usuarioAtual && tarefa.prioridade === prioridade
     );
   }
 
   adicionarTarefa(titulo: string, descricao: string, prioridade: Prioridade): void {
+    const usuarioAtual = this.authService.obterUsuarioAtual();
+    if (!usuarioAtual) return;
+
     const novaTarefa: Tarefa = {
       id: Date.now(),
-      usuarioId: 'defaultUser', // Removido o uso do AuthService
+      usuarioId: usuarioAtual,
       titulo,
       descricao,
       concluida: false,
@@ -71,8 +85,11 @@ export class TodoService {
   }
 
   alternarTarefa(id: number): void {
+    const usuarioAtual = this.authService.obterUsuarioAtual();
+    if (!usuarioAtual) return;
+
     const tarefasAtualizadas = this.tarefas.value.map(tarefa =>
-      tarefa.id === id
+      tarefa.id === id && tarefa.usuarioId === usuarioAtual
         ? { ...tarefa, concluida: !tarefa.concluida }
         : tarefa
     );
@@ -81,16 +98,22 @@ export class TodoService {
   }
 
   excluirTarefa(id: number): void {
+    const usuarioAtual = this.authService.obterUsuarioAtual();
+    if (!usuarioAtual) return;
+
     const tarefasAtualizadas = this.tarefas.value.filter(
-      tarefa => tarefa.id !== id
+      tarefa => !(tarefa.id === id && tarefa.usuarioId === usuarioAtual)
     );
     this.tarefas.next(tarefasAtualizadas);
     this.salvarTarefas();
   }
 
   atualizarTarefa(tarefaAtualizada: Tarefa): void {
+    const usuarioAtual = this.authService.obterUsuarioAtual();
+    if (!usuarioAtual) return;
+
     const tarefasAtualizadas = this.tarefas.value.map(tarefa =>
-      tarefa.id === tarefaAtualizada.id
+      tarefa.id === tarefaAtualizada.id && tarefa.usuarioId === usuarioAtual
         ? tarefaAtualizada
         : tarefa
     );

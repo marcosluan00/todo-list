@@ -1,29 +1,32 @@
-import { Component } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { Prioridade, Tarefa } from '../../models/todo.interface';
-import { TodoFormComponent } from '../todo-form/todo-form.component';
+import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { TodoFormComponent } from '../todo-form/todo-form.component';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { Prioridade, Tarefa } from '../../models/todo.interface';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [TodoFormComponent, CommonModule],
+  standalone: true,
+  imports: [CommonModule, TodoFormComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
   animations: [
     trigger('animacaoTarefa', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        style({ opacity: 0, transform: 'translateY(20px)' }),
         animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({ opacity: 0, transform: 'translateY(20px)' }))
+        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-20px)' }))
       ])
     ])
   ]
 })
-export class TodoListComponent {
+export class TodoListComponent implements OnInit {
   tarefas$!: Observable<Tarefa[]>;
 
   prioridades: { valor: Prioridade; rotulo: string; cor: string }[] = [
@@ -33,22 +36,25 @@ export class TodoListComponent {
   ];
 
   constructor(
-    private tarefaService: TodoService,
-  ) {
-    this.tarefas$ = this.tarefaService.obterTarefas();
+    private todoService: TodoService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.tarefas$ = this.todoService.obterTarefas();
   }
 
   obterTarefasPorPrioridade(prioridade: Prioridade): Tarefa[] {
-    return this.tarefaService.obterTarefasPorPrioridade(prioridade);
+    return this.todoService.obterTarefasPorPrioridade(prioridade);
   }
 
-
   alternarTarefa(id: number): void {
-    this.tarefaService.alternarTarefa(id);
+    this.todoService.alternarTarefa(id);
   }
 
   excluirTarefa(id: number): void {
-    this.tarefaService.excluirTarefa(id);
+    this.todoService.excluirTarefa(id);
   }
 
   formatarData(data: Date): string {
@@ -59,5 +65,10 @@ export class TodoListComponent {
       hour: '2-digit',
       minute: '2-digit'
     });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

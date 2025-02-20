@@ -7,6 +7,13 @@ Este projeto é uma aplicação de lista de tarefas desenvolvida com [Angular](h
 - **Angular**: Framework para construção de aplicações web.
 - **Bootstrap**: Biblioteca de CSS para estilização e layout responsivo.
 
+## Checklist de Etapas
+
+- [x] Criação do ToDo-List com LocalStorage.
+- [x] Adição de autenticação com LocalStorage.
+- [ ] Adição do Firebase no projeto (autenticação e lista).
+- [ ] Deploy.
+
 ## Futuras Alterações
 
 ### Versão 1: Funcionalidades Básicas (Localhost)
@@ -44,7 +51,7 @@ Este projeto é uma aplicação de lista de tarefas desenvolvida com [Angular](h
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/todo-list.git
+   git clone https://github.com/marcosluan00/todo-list
    cd todo-list
    ```
 

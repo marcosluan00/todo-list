@@ -1,10 +1,10 @@
-<div class="card shadow-sm mt-5">
-    <div class="card-body">
-      <form (ngSubmit)="aoEnviar()" #formularioTarefa="ngForm">
+<div class="card shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg bg-white mt-4">
+    <div class="card-body p-6">
+      <form (ngSubmit)="aoEnviar()" #formularioTarefa="ngForm" class="space-y-4">
         <div class="mb-3">
           <input 
             type="text" 
-            class="form-control form-control-lg" 
+            class="form-control form-control-lg border border-gray-300 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50" 
             placeholder="O que precisa ser feito?"
             [(ngModel)]="titulo"
             name="titulo"
@@ -14,18 +14,18 @@
   
         <div class="mb-3">
           <textarea 
-            class="form-control" 
+            class="form-control border border-gray-300 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50" 
             placeholder="Descrição (opcional)"
             [(ngModel)]="descricao"
             name="descricao"
             rows="2"></textarea>
         </div>
   
-        <div class="mb-3">
-          <label class="form-label">Prioridade</label>
-          <div class="d-flex gap-2">
+        <div>
+          <label class="form-label text-gray-600 font-medium mb-2">Prioridade</label>
+          <div class="d-flex gap-3">
             @for(p of prioridades;track p){
-                <div class="flex-grow-1">
+                <div class="flex-grow-1 transform transition-all duration-300 hover:scale-[1.05]">
                     <input 
                       type="radio" 
                       class="btn-check" 
@@ -34,24 +34,22 @@
                       [(ngModel)]="prioridade"
                       [value]="p.valor">
                     <label 
-                      class="btn w-100" 
+                      class="btn w-100 shadow-sm hover:shadow-md transition-shadow border border-gray-300" 
                       [class]="'btn-outline-' + p.cor"
                       [for]="p.valor">
                       {{ p.rotulo }}
                     </label>
                 </div>
             }
-            
           </div>
         </div>
   
         <button 
           type="submit" 
-          class="btn btn-primary w-100"
+          class="btn btn-primary w-100 py-3 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
           [disabled]="!titulo.trim()">
           Adicionar Tarefa
         </button>
       </form>
     </div>
-  </div>
-  
+</div>

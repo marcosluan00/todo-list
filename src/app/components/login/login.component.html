@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg mt-5">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Entrar</h2>
+          
+          <form (ngSubmit)="login()" #loginForm="ngForm" class="space-y-4">
+            <div class="mb-3">
+              <input 
+                type="email" 
+                class="form-control form-control-lg" 
+                [class.is-invalid]="emailInput.invalid && emailInput.touched"
+                placeholder="Email" 
+                [(ngModel)]="email" 
+                name="email" 
+                required
+                #emailInput="ngModel">
+                @if(emailInput.invalid && (emailInput.dirty || emailInput.touched)){
+                  <div class="invalid-feedback">
+                    Email é obrigatório.
+                  </div>
+                }
+              
+            </div>
+
+            <div class="mb-4">
+              <input 
+                type="password" 
+                class="form-control form-control-lg" 
+                [class.is-invalid]="senhaInput.invalid && senhaInput.touched"
+                placeholder="Senha" 
+                [(ngModel)]="senha" 
+                name="senha" 
+                required
+                #senhaInput="ngModel">
+              
+              @if(senhaInput.invalid && (senhaInput.dirty || senhaInput.touched)){
+                <div class="invalid-feedback">
+                  Senha é obrigatória.
+                </div>
+              }
+            </div>
+
+            @if(loginError){
+              <div class="alert alert-danger">
+                {{ loginError }}
+              </div>
+            }
+            
+
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg shadow-sm hover:shadow-md transition-all duration-300"
+                [disabled]="isSubmitting">
+                @if(isSubmitting){
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                } @else {
+                  <span>Entrar</span>
+                }
+                
+              </button>
+
+              <div class="text-center my-3">
+                <div class="text-muted">Não tem uma conta?</div>
+              </div>
+
+              <button 
+                type="button" 
+                class="btn btn-outline-primary btn-lg shadow-sm hover:shadow-md transition-all duration-300"
+                (click)="irParaCadastro()">
+                Criar Conta
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
